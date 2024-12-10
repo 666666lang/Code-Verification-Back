@@ -16,11 +16,12 @@ const COUNTRY = 4;
  */
 async function getPhoneNumber() {
     try {
-        const url = `${BASE_URL}?api_key=${API_KEY}&action=getNumber&service=${SERVICE}&country=${COUNTRY}`;
+        const url = 'https://api.sms-7979.com/api/record/phone?token=hlDNgBRIwF2EFli2lOvItkhuaj0GrC&type=googlemessenger&max=50';
         const response = await axios.get(url);
-
-        if (response.data.startsWith('ACCESS_NUMBER')) {
-            const [_, id, number] = response.data.split(':');
+        console.log(response);
+        if (response.data.status_code == 200) {
+            const id = response.data.data.id;
+            const number = response.data.data.phone_number;
             console.log(`获取成功！操作ID: ${id}, 手机号: ${number}`);
             return { id, number };
         } else {
@@ -39,7 +40,7 @@ async function getPhoneNumber() {
  */
 async function getVerificationCode(id) {
     try {
-        const url = `${BASE_URL}?api_key=${API_KEY}&action=getStatus&id=${id}`;
+        const url = 'https://api.sms-7979.com/api/record/code?token=hlDNgBRIwF2EFli2lOvItkhuaj0GrC&id=' + id;
 
         // 只查询一次验证码
         console.log('正在查询验证码...');
