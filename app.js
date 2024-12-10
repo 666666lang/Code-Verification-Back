@@ -18,7 +18,7 @@ async function getPhoneNumber() {
     try {
         const url = 'https://api.sms-7979.com/api/record/phone?token=hlDNgBRIwF2EFli2lOvItkhuaj0GrC&type=googlemessenger&max=50';
         const response = await axios.get(url);
-        console.log(response);
+        // console.log(response);
         if (response.data.status_code == 200) {
             const id = response.data.data.id;
             const number = response.data.data.phone_number;
@@ -46,10 +46,10 @@ async function getVerificationCode(id) {
         console.log('正在查询验证码...');
         const response = await axios.get(url);
 
-        if (response.data.startsWith('STATUS_OK')) {
-            const code = response.data.split(':')[1];
-            return code;
-        } else if (response.data === 'STATUS_WAIT_CODE') {
+        if (response.data.data) {
+            console.error('成功收到验证码:', response.data.data);
+            return response.data.data;
+        } else if (response.data.message === ',未收到验证码') {
             console.log('验证码未到，稍后重试...');
             return 0;
         } else {
