@@ -47,6 +47,7 @@ async function getVerificationCode(id) {
 
         if (response.data.startsWith('STATUS_OK')) {
             const code = response.data.split(':')[1];
+            console.log(`成功获取验证码: ${code}`);
             return code;
         } else if (response.data === 'STATUS_WAIT_CODE') {
             console.log('验证码未到，稍后重试...');
